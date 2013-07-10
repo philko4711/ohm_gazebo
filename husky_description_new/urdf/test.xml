@@ -1,0 +1,206 @@
+<model:physical xmlns:gazebo="http://playerstage.sourceforge.net/gazebo/xmlschema/#gz" xmlns:model="http://playerstage.sourceforge.net/gazebo/xmlschema/#model" xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" xmlns:body="http://playerstage.sourceforge.net/gazebo/xmlschema/#body" xmlns:geom="http://playerstage.sourceforge.net/gazebo/xmlschema/#geom" xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#joint" xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller" xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" xmlns:rendering="http://playerstage.sourceforge.net/gazebo/xmlschema/#rendering" xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics" name="Volksbot">
+    <xyz>0 0 0</xyz>
+    <rpy>0 0 0</rpy>
+    <body:empty name="base_footprint">
+        <massMatrix>true</massMatrix>
+        <mass>25</mass>
+        <ixx>0.83333</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1.0052</iyy>
+        <iyz>0</iyz>
+        <izz>0.33854</izz>
+        <cx>0</cx>
+        <cy>0</cy>
+        <cz>0.075</cz>
+        <xyz>0 0 0</xyz>
+        <rpy>0 -0 0</rpy>
+        <geom:trimesh name="base_footprint_geom_base_link">
+            <xyz>0 0 0.175</xyz>
+            <rpy>0 -0 0</rpy>
+            <scale>1 1 1</scale>
+            <mesh>/home/schwinghammer/ros_workspace/volksbot_new/Media/VolksbotChassis.stl</mesh>
+            <genTexCoord>true</genTexCoord>
+            <visual>
+                <xyz>0 0 0</xyz>
+                <rpy>0 -0 0</rpy>
+                <scale>1 1 1</scale>
+                <mesh>/home/schwinghammer/ros_workspace/volksbot_new/Media/VolksbotChassis.stl</mesh>
+            </visual>
+        </geom:trimesh>
+        <turnGravityOff>false</turnGravityOff>
+        <selfCollide>false</selfCollide>
+    </body:empty>
+    <body:empty name="left_back_wheel">
+        <massMatrix>true</massMatrix>
+        <mass>0.85</mass>
+        <ixx>0.0041</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.0041</iyy>
+        <iyz>0</iyz>
+        <izz>0.00718</izz>
+        <cx>0</cx>
+        <cy>0</cy>
+        <cz>0</cz>
+        <xyz>-0.14 0.2075 0.13</xyz>
+        <rpy>0 -0 0</rpy>
+        <geom:cylinder name="left_back_wheel_geom">
+            <xyz>0 0 0</xyz>
+            <rpy>90 -0 0</rpy>
+            <size>0.13 0.085</size>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <kp>1e+06</kp>
+            <kd>10000</kd>
+            <genTexCoord>true</genTexCoord>
+            <visual>
+                <xyz>0 0 0</xyz>
+                <rpy>0 -0 0</rpy>
+                <scale>1 1 1</scale>
+                <mesh>/home/schwinghammer/ros_workspace/volksbot_new/Media/original5.stl</mesh>
+                <material>Gazebo/Grey</material>
+            </visual>
+        </geom:cylinder>
+        <turnGravityOff>false</turnGravityOff>
+        <selfCollide>false</selfCollide>
+        <fdir value="1 0 0" />
+        <friction value="100.0" />
+    </body:empty>
+    <joint:hinge name="left_back_wheel_joint">
+        <body1>left_back_wheel</body1>
+        <body2>base_footprint</body2>
+        <anchor>left_back_wheel</anchor>
+        <axis>0 1 0</axis>
+        <damping>0</damping>
+    </joint:hinge>
+    <body:empty name="left_front_wheel">
+        <massMatrix>true</massMatrix>
+        <mass>0.85</mass>
+        <ixx>0.0041</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.0041</iyy>
+        <iyz>0</iyz>
+        <izz>0.00718</izz>
+        <cx>0</cx>
+        <cy>0</cy>
+        <cz>0</cz>
+        <xyz>0.14 0.2075 0.13</xyz>
+        <rpy>0 -0 0</rpy>
+        <geom:cylinder name="left_front_wheel_geom">
+            <xyz>0 0 0</xyz>
+            <rpy>90 -0 0</rpy>
+            <size>0.13 0.085</size>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <kp>1e+06</kp>
+            <kd>10000</kd>
+            <genTexCoord>true</genTexCoord>
+            <visual>
+                <xyz>0 0 0</xyz>
+                <rpy>0 -0 0</rpy>
+                <scale>1 1 1</scale>
+                <mesh>/home/schwinghammer/ros_workspace/volksbot_new/Media/original5.stl</mesh>
+                <material>Gazebo/Grey</material>
+            </visual>
+        </geom:cylinder>
+        <turnGravityOff>false</turnGravityOff>
+        <selfCollide>false</selfCollide>
+        <fdir value="1 0 0" />
+        <friction value="100.0" />
+    </body:empty>
+    <joint:hinge name="left_front_wheel_joint">
+        <body1>left_front_wheel</body1>
+        <body2>base_footprint</body2>
+        <anchor>left_front_wheel</anchor>
+        <axis>0 1 0</axis>
+        <damping>0</damping>
+    </joint:hinge>
+    <body:empty name="right_back_wheel">
+        <massMatrix>true</massMatrix>
+        <mass>0.85</mass>
+        <ixx>0.0041</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.0041</iyy>
+        <iyz>0</iyz>
+        <izz>0.00718</izz>
+        <cx>0</cx>
+        <cy>0</cy>
+        <cz>0</cz>
+        <xyz>-0.14 -0.2075 0.13</xyz>
+        <rpy>0 -0 0</rpy>
+        <geom:cylinder name="right_back_wheel_geom">
+            <xyz>0 0 0</xyz>
+            <rpy>90 -0 0</rpy>
+            <size>0.13 0.085</size>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <kp>1e+06</kp>
+            <kd>10000</kd>
+            <genTexCoord>true</genTexCoord>
+            <visual>
+                <xyz>0 0 0</xyz>
+                <rpy>0 -0 0</rpy>
+                <scale>1 1 1</scale>
+                <mesh>/home/schwinghammer/ros_workspace/volksbot_new/Media/original5.stl</mesh>
+                <material>Gazebo/Grey</material>
+            </visual>
+        </geom:cylinder>
+        <turnGravityOff>false</turnGravityOff>
+        <selfCollide>false</selfCollide>
+        <fdir value="1 0 0" />
+        <friction value="100.0" />
+    </body:empty>
+    <joint:hinge name="right_back_wheel_joint">
+        <body1>right_back_wheel</body1>
+        <body2>base_footprint</body2>
+        <anchor>right_back_wheel</anchor>
+        <axis>0 1 0</axis>
+        <damping>0</damping>
+    </joint:hinge>
+    <body:empty name="right_front_wheel">
+        <massMatrix>true</massMatrix>
+        <mass>0.85</mass>
+        <ixx>0.0041</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.0041</iyy>
+        <iyz>0</iyz>
+        <izz>0.00718</izz>
+        <cx>0</cx>
+        <cy>0</cy>
+        <cz>0</cz>
+        <xyz>0.14 -0.2075 0.13</xyz>
+        <rpy>0 -0 0</rpy>
+        <geom:cylinder name="right_front_wheel_geom">
+            <xyz>0 0 0</xyz>
+            <rpy>90 -0 0</rpy>
+            <size>0.13 0.085</size>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <kp>1e+06</kp>
+            <kd>10000</kd>
+            <genTexCoord>true</genTexCoord>
+            <visual>
+                <xyz>0 0 0</xyz>
+                <rpy>0 -0 0</rpy>
+                <scale>1 1 1</scale>
+                <mesh>/home/schwinghammer/ros_workspace/volksbot_new/Media/original5.stl</mesh>
+                <material>Gazebo/Grey</material>
+            </visual>
+        </geom:cylinder>
+        <turnGravityOff>false</turnGravityOff>
+        <selfCollide>false</selfCollide>
+        <fdir value="1 0 0" />
+        <friction value="100.0" />
+    </body:empty>
+    <joint:hinge name="right_front_wheel_joint">
+        <body1>right_front_wheel</body1>
+        <body2>base_footprint</body2>
+        <anchor>right_front_wheel</anchor>
+        <axis>0 1 0</axis>
+        <damping>0</damping>
+    </joint:hinge>
+</model:physical>
