@@ -9,6 +9,6 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/gazebo_joystick</url>
   <depend package="roscpp"/>
-  <depend package="joynew"/>
+  <depend package="joy"/>
 
 </package>

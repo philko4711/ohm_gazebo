@@ -41,7 +41,7 @@ JoystickToCommandVel::JoystickToCommandVel():
    l_scale_ = 1.39; //  V2013   1.39 maximale vel für 74:1 Übersetzung
 // a_scale_ = 1.39; //  V2013 
 
- vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
+ vel_pub_ = nh_.advertise<geometry_msgs::Twist>("robot/cmd_vel", 1);
  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &JoystickToCommandVel::joyCallback, this);
 }
 
