@@ -1,0 +1,17 @@
+<package>
+  <description brief="robot_switch">
+
+     robot_switch
+
+  </description>
+  <author>Philipp Koch</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/robot_switch</url>
+  <depend package="roscpp"/>
+  <depend package="sensor_msgs"/>
+  <depend package="ohm_joyToVel"/>
+
+</package>
+
+
