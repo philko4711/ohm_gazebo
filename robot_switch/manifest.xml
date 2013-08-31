@@ -11,6 +11,7 @@
   <depend package="roscpp"/>
   <depend package="sensor_msgs"/>
   <depend package="ohm_joyToVel"/>
+  <depend package="image_transport"/>
 
 </package>
 

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+	<param name="/use_sim_time" value="true" />
+	 
+	<!-- ############################## Gazebo mit ausgewählter Welt starten ##################################### -->               
+	
+	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find hector_nist_arena_worlds)/worlds/go2011_arena.world" respawn="false" output="screen"/>-->
+	<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find hector_nist_arena_worlds)/worlds/empty.world" respawn="false" output="screen"/>
+	<node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen"/>
+	
+	<!-- Maps  -->
+	<!-- hector_nist_arena_worlds :  maze_10m_x_14m.world  go2011_arena.world -->
+	<!-- gazebo_worlds :  wg_collada.world   empty.world  balcony.word    -->
+	
+	<include file="$(find volksbot_new)/launch/robots.launch"/>
+	
+	<arg name="gui" default="False" />
+		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+			<param name="rate" type="double" value="1000.0" />
+			<param name="use_gui" value="$(arg gui)"/>
+		</node>
+		
+	<node name = "joy_node" pkg = "joy" type = "joy_node" output = "screen">
+		<param name = "dev" type = "string" value = "/dev/input/js1"/>
+	</node>	
+	<node name = "joy_to_vel" pkg = "ohm_joyToVel" type = "ohm_joyToVel" output = "screen"/>	
+	<node name = "robot_switch" pkg = "robot_switch" type = "robotswitch" output = "screen"/> 	
+</launch>

@@ -9,8 +9,11 @@
 #define GUI_H_
 
 #include <QWidget>
+#include <QSpinBox>
 
-class QImage;
+#include "RobotSwitch.h"
+
+class ImageView;
 class QSpinBox;
 class QVBoxLayout;
 class QTimer;
@@ -18,14 +21,17 @@ class RobotSwitch;
 
 class Gui: public QWidget
 {
+  Q_OBJECT
 public:
-   Gui(const RobotSwitch* const robSwitch, QWidget* parent = NULL);
+   Gui(RobotSwitch* robSwitch, QWidget* parent = NULL);
    virtual ~Gui();
 public slots:
-   void iterateSwitch(void);
    void robotChanged(int nbr);
+   void iterate(void);
+   void setImage(const unsigned char* image, const int height, const int width);
+   void updateNbr(void){_robSelector->setMaximum(_robSwitch.getNbr());}
 private:
-   QImage* _image;
+   ImageView* _imgView;
    QSpinBox* _robSelector;
    QVBoxLayout* _vLayout;
    QTimer* _timer;

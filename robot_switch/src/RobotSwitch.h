@@ -14,6 +14,7 @@
 #include <image_transport/image_transport.h>
 
 #include <vector>
+#include <iostream>
 
 class Gui;
 
@@ -21,13 +22,14 @@ class RobotSwitch
 {
 public:
    RobotSwitch(Gui* const gui = NULL);
-   virtual ~RobotSwitch(void);
+   virtual ~RobotSwitch(void){}
+   void setGui(Gui* gui){_gui = gui;}
    void addRobot(const std::string& name);
    unsigned int setActive(unsigned int nbr){return(_nbr = nbr);}
    void start(void);
    unsigned int getNbr(void)const{return(_nbr);}
+   void run(void){ros::spinOnce();}
 private:
-   void run(void){ros::spin();}
    void cmdVelCallback(const geometry_msgs::TwistStamped& cmdVel);
    void imgCallback(const sensor_msgs::ImageConstPtr& image);
    ros::NodeHandle _nh;
@@ -36,7 +38,7 @@ private:
    std::vector<ros::Subscriber> _imgSubs;
    unsigned int _nbr;
    unsigned int _active;
-   Gui& _gui;
+   Gui* _gui;
 
 };
 
