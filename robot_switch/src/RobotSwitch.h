@@ -25,7 +25,7 @@ public:
    virtual ~RobotSwitch(void){}
    void setGui(Gui* gui){_gui = gui;}
    void addRobot(const std::string& name);
-   unsigned int setActive(unsigned int nbr){return(_nbr = nbr);}
+   unsigned int setActive(unsigned int nbr);
    void start(void);
    unsigned int getNbr(void)const{return(_nbr);}
    void run(void){ros::spinOnce();}
@@ -35,7 +35,9 @@ private:
    ros::NodeHandle _nh;
    std::vector<ros::Publisher> _twistPubs;
    ros::Subscriber _twistSub;
-   std::vector<ros::Subscriber> _imgSubs;
+   ros::Subscriber _imgSub;
+   //std::vector<ros::Subscriber> _imgSubs;
+   std::vector<std::string> _robots;
    unsigned int _nbr;
    unsigned int _active;
    Gui* _gui;

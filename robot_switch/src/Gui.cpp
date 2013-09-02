@@ -27,11 +27,12 @@ Gui::Gui(RobotSwitch* robSwitch, QWidget* parent) :
   _vLayout->addWidget(_imgView);
    _robSelector->setPrefix("Robot: ");
    _robSelector->setMinimum(1);
-   _robSelector->setMaximum(_robSwitch.getNbr());
+   _robSelector->setMaximum(1);
    connect(_robSelector, SIGNAL(valueChanged(int)), this, SLOT(robotChanged(int)));
    _vLayout->addWidget(_robSelector);
    connect(_timer, SIGNAL(timeout()), this, SLOT(iterate()));
    _timer->start(QT_TIMER);
+   this->setToolTip("Wer das liest ist doof!");
 }
 
 Gui::~Gui()
@@ -44,6 +45,7 @@ Gui::~Gui()
 
 void Gui::robotChanged(int nbr)
 {
+  // qDebug() << __PRETTY_FUNCTION__ << " activate nbr " << nbr << "\n";
    _robSwitch.setActive(nbr);
 }
 
@@ -54,19 +56,19 @@ void Gui::iterate(void)
 
 void Gui::setImage(const unsigned char* image, const int height, const int width)
 {
-  qDebug() << __PRETTY_FUNCTION__ << "\n";
+  //qDebug() << __PRETTY_FUNCTION__ << "\n";
   if(!_imgView)
   {
     _imgView = new ImageView(image, height, width);
     this->update();
     return;
   }
-  qDebug() << __PRETTY_FUNCTION__ << " width = " << width << " height = " << height << "\n";
+  //qDebug() << __PRETTY_FUNCTION__ << " width = " << width << " height = " << height << "\n";
   if(height != _imgView->height())
     _imgView->setHeight(height);
   if(width != _imgView->width())
     _imgView->setWidth(width);
-  qDebug()  << __PRETTY_FUNCTION__ << " " << image[0] << "\n";
+  //qDebug()  << __PRETTY_FUNCTION__ << " " << image[0] << "\n";
   _imgView->setImage(image);
   this->update();
 }
