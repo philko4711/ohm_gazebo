@@ -20,12 +20,10 @@
 RobotSwitch::RobotSwitch(Gui* const gui) :
             _gui(gui)
 {
-   std::string strVar;
+   std::string strVar = "vel/teleop";
 
-   ros::NodeHandle nh("~");
-
-   // Parameters for launch file
-   nh.param("input_cmd_vel", strVar, std::string("vel/teleop"));
+   /*ros::NodeHandle nh("~");
+   nh.param("input_cmd_vel", strVar, std::string("vel/teleop"));*/
    _twistSub = _nh.subscribe(strVar, 10, &RobotSwitch::cmdVelCallback, this);
    _nbr = 0;
    _active = NO_ACTIVE;
