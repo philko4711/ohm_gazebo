@@ -17,6 +17,7 @@
 	
 	<include file="$(find volksbot_new)/launch/robots.launch"/>
 	
+	
 	<arg name="gui" default="False" />
 		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
 			<param name="rate" type="double" value="1000.0" />
@@ -29,5 +30,9 @@
 	<node name = "joy_to_vel" pkg = "ohm_joyToVel" type = "ohm_joyToVel" output = "screen">
 		<param name = "joystickUsed" type = "bool" value = "true"/>
 	</node>	
-	<node name = "robot_switch" pkg = "robot_switch" type = "robotswitch" output = "screen"/> 	
+	<node pkg = "robot_switch" name = "robot_switch"  type = "robotswitch" output = "screen">
+		<param name = "robot_nbr" type = "int" value = "2"/>
+		<param name = "robot0" type = "string" value = "robot1"/>
+		<param name = "robot1" type = "string" value = "robot2"/>
+	</node> 	
 </launch>
