@@ -19,14 +19,13 @@ int main(int argc, char** argv)
 {
    argc = 2;
    argv[1] = "_image_transport:=compressed";
-   ros::init(argc, argv, "robot_switch_node");
+   ros::init(argc, argv, "robot_switch");
    std::string strVar;
-   std::string robVar;
    std::stringstream ss;
    std::vector<std::string> robots;
    int robNbr = 0;
    ros::NodeHandle nh("~");
-   nh.param<int>("robot_nbr", robNbr, 5);
+   nh.param("robot_nbr", robNbr, int(5));
    qDebug() << __PRETTY_FUNCTION__ << " number of robots = " << robNbr << "\n";
    for(int i = 0; i < robNbr; i++)
    {
