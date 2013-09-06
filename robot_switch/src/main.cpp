@@ -26,7 +26,6 @@ int main(int argc, char** argv)
    int robNbr = 0;
    ros::NodeHandle nh("~");
    nh.param("robot_nbr", robNbr, int(5));
-   qDebug() << __PRETTY_FUNCTION__ << " number of robots = " << robNbr << "\n";
    for(int i = 0; i < robNbr; i++)
    {
       ss << "robot";
