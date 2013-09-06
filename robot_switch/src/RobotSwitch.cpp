@@ -20,10 +20,9 @@
 RobotSwitch::RobotSwitch(Gui* const gui) :
             _gui(gui)
 {
-   std::string strVar = "vel/teleop";
-
-   /*ros::NodeHandle nh("~");
-   nh.param("input_cmd_vel", strVar, std::string("vel/teleop"));*/
+   std::string strVar;
+   ros::NodeHandle nh("~");
+   nh.param("input_cmd_vel", strVar, std::string("vel/teleop"));
    _twistSub = _nh.subscribe(strVar, 10, &RobotSwitch::cmdVelCallback, this);
    _nbr = 0;
    _active = NO_ACTIVE;
@@ -33,18 +32,11 @@ RobotSwitch::RobotSwitch(Gui* const gui) :
 void RobotSwitch::addRobot(const std::string& name)
 {
    ros::Publisher pubVar;
-  // ros::Subscriber subVar;
    _robots.push_back(name);
    std::string strVar = name;
    strVar += "/cmd_vel";
    pubVar = _nh.advertise<geometry_msgs::Twist>(strVar, 1);
-   /*strVar.clear();
-   strVar = name;
-   strVar += "/camera/camera/image_raw";*/
-   //robot/camera/camera/image_raw
-   //subVar = _nh.subscribe(strVar,10 ,&RobotSwitch::imgCallback, this);
    _twistPubs.push_back(pubVar);
-   //_imgSubs.push_back(subVar);
    ++_nbr;
    if(_active == NO_ACTIVE)
    {
@@ -70,7 +62,6 @@ void RobotSwitch::start(void)
 
 unsigned int RobotSwitch::setActive(unsigned int nbr)
 {
-//   qDebug() << __PRETTY_FUNCTION__ << " change to nbr " << nbr << "\n";
    _imgSub.shutdown();
    _active = nbr - 1;
    std::string strVar = _robots[_active];
@@ -81,8 +72,6 @@ unsigned int RobotSwitch::setActive(unsigned int nbr)
 
 void RobotSwitch::cmdVelCallback(const geometry_msgs::TwistStamped& cmdVel)
 {
-  //qDebug() << __PRETTY_FUNCTION__ << " active = " << _active << "\n";
-  //ROS_INFO("Active : %i\n", _active);
   ros::Publisher pubVar = _twistPubs[_active];
   geometry_msgs::Twist msg = cmdVel.twist;
   msg.angular.z *= 4.0;
@@ -92,7 +81,6 @@ void RobotSwitch::cmdVelCallback(const geometry_msgs::TwistStamped& cmdVel)
 
 void RobotSwitch::imgCallback(const sensor_msgs::ImageConstPtr& image)
 {
-  //qDebug()  << __PRETTY_FUNCTION__ << " " << image->data.data()[0] << "\n";
   _gui->setImage(image->data.data(), image->height, image->width);
 }
 

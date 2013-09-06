@@ -1,8 +1,8 @@
-<!--<?xml version='1.0' encoding='UTF-8' ?>-->
+<?xml version="1.0"?>
 <launch>
 <node pkg = "robot_switch" name = "robot_switch"  type = "robotswitch" output = "screen">
-		<param name = "robot_nbr" value = "2"/>
-		<param name = "robot0" value = "robot1"/>
-		<param name = "robot1"  value = "robot2"/>
-	</node>
+	<param name = "robot_nbr" type = "int" value = "2"/>
+	<param name = "robot0" type = "string" value = "robot1"/>
+	<param name = "robot1"  type = "string" value = "robot2"/>
+</node>
 </launch>

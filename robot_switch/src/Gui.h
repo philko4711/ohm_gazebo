@@ -15,7 +15,7 @@
 
 class ImageView;
 class QSpinBox;
-class QVBoxLayout;
+class QHBoxLayout;
 class QTimer;
 class RobotSwitch;
 
@@ -26,14 +26,14 @@ public:
    Gui(RobotSwitch* robSwitch, QWidget* parent = NULL);
    virtual ~Gui();
 public slots:
-   void robotChanged(int nbr);
-   void iterate(void);
+   void robotChanged(int nbr)const{_robSwitch.setActive(nbr);}
+   void iterate(void)const{_robSwitch.run();}
    void setImage(const unsigned char* image, const int height, const int width);
    void updateNbr(void){_robSelector->setMaximum(_robSwitch.getNbr());}
 private:
    ImageView* _imgView;
    QSpinBox* _robSelector;
-   QVBoxLayout* _vLayout;
+   QHBoxLayout* _hLayout;
    QTimer* _timer;
    RobotSwitch& _robSwitch;
 };

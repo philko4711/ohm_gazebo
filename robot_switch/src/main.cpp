@@ -31,9 +31,7 @@ int main(int argc, char** argv)
    {
       ss << "robot";
       ss << i;
-      qDebug() << __PRETTY_FUNCTION__ << " LaunchFileParam: " << ss.str().c_str() << "\n";
       nh.param(ss.str(), strVar, std::string("robot1"));
-      qDebug() << __PRETTY_FUNCTION__ << " ValueGainedFromLunch" << strVar.c_str() << "\n";
       robots.push_back(strVar);
       ss.str("");
    }
@@ -43,7 +41,6 @@ int main(int argc, char** argv)
    robSwitch.setGui(&gui);
    for(std::vector<std::string>::iterator iter = robots.begin(); iter != robots.end(); iter++)
       robSwitch.addRobot(*iter);
- //  robSwitch.addRobot("robot2");
    gui.resize(600,600);
    gui.show();
    return(app.exec());
