@@ -40,7 +40,7 @@ int main(int argc, char** argv)
    robSwitch.setGui(&gui);
    for(std::vector<std::string>::iterator iter = robots.begin(); iter != robots.end(); iter++)
       robSwitch.addRobot(*iter);
-   gui.resize(600,600);
+   gui.resize(900,600);
    gui.show();
    return(app.exec());
 }
