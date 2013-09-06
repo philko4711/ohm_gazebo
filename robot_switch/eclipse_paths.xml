@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdtprojectproperties>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
+<language name="C++ Source File">
+<includepath>/usr/include/qt4/</includepath>
+<includepath>/usr/include/qt4/Qt3Support</includepath>
+<includepath>/usr/include/qt4/QtCore</includepath>
+<includepath>/usr/include/qt4/QtDBus</includepath>
+<includepath>/usr/include/qt4/QtDesigner</includepath>
+<includepath>/usr/include/qt4/QtDeclarative</includepath>
+<includepath>/usr/include/qt4/QtHelp</includepath>
+<includepath>/usr/include/qt4/QtNetwork</includepath>
+<includepath>/usr/include/qt4/QtOpenGL</includepath>
+<includepath>/usr/include/qt4/QtScript</includepath>
+<includepath>/usr/include/qt4/QtScriptTools</includepath>
+<includepath>/usr/include/qt4/QtSql</includepath>
+<includepath>/usr/include/qt4/QtSvg</includepath>
+<includepath>/usr/include/qt4/QtTest</includepath>
+<includepath>/usr/include/qt4/QtUiTools</includepath>
+<includepath>/usr/include/qt4/QtWebKit</includepath>
+<includepath>/usr/include/qt4/QtXml</includepath>
+<includepath>/usr/include/qt4/QtXmlPatterns</includepath>
+<includepath workspace_path="true">/obviously</includepath>
+<includepath>/opt/ros/fuerte/include</includepath>
+<includepath>/usr/include/qt4/QtGui</includepath>
+<includepath>/opt/ros/fuerte/stacks/image_common/image_transport/include</includepath>
+
+</language>
+<language name="C Source File">
+<includepath>/usr/include/qt4/QtGui</includepath>
+<includepath>/opt/ros/fuerte/stacks/image_common/image_transport/include</includepath>
+
+</language>
+<language name="Object File">
+
+</language>
+<language name="Assembly Source File">
+<includepath>/usr/include/qt4/QtGui</includepath>
+<includepath>/opt/ros/fuerte/stacks/image_common/image_transport/include</includepath>
+
+</language>
+</section>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
+<language name="C++ Source File">
+
+</language>
+<language name="C Source File">
+
+</language>
+<language name="Object File">
+
+</language>
+<language name="Assembly Source File">
+
+</language>
+</section>
+</cdtprojectproperties>
