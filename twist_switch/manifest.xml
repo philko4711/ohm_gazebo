@@ -1,0 +1,17 @@
+<package>
+  <description brief="twist_switch">
+
+     twist_switch
+
+  </description>
+  <author>Philipp Koch</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/twist_switch</url>
+  <depend package="roscpp"/>
+  <depend package="ohm_joyToVel"/>
+  <depend package="geometry_msgs"/>
+
+</package>
+
+
