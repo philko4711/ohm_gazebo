@@ -42,6 +42,8 @@
 
 #include <ros/time.h>
 
+#define THRS 1.0
+
 using namespace gazebo;
 
 enum {BL= 0, BR=1, FL=2, FR=3};
@@ -365,14 +367,18 @@ void HuskyPlugin::OnCmdVel( const geometry_msgs::TwistConstPtr &msg)
   va = msg->angular.z;
 
 /* Begrenzung der cmd_vel - Joystick ist zwar in der gazebo_joystick node auf +-1.39 limitiert aber die move_base-Node könnte schneller drehen lassen...  -> Odometriefehler */
-if (msg->angular.z >= 0.35)
-{ va = 0.35;
+/* Your englisch is also not the yellow of the egg!*/
+if (msg->angular.z >= THRS)//0.35)
+{
+   va = THRS;
 }
-else if (msg->angular.z <= -0.35)
-{ va = -0.35;
+else if (msg->angular.z <= (-1.0) * THRS)//-0.35)
+{
+   va = (-1.0) * THRS;//-0.35;
 }
 else
-{ va = msg->angular.z;
+{
+   va = msg->angular.z;
 }
 
 //  wheel_speed_[BL] = vr - va * (wheel_sep_) / 2;
