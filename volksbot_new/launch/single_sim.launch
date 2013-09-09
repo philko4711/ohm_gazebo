@@ -5,9 +5,9 @@
 	 
 	<!-- ############################## Gazebo mit ausgewählter Welt starten ##################################### -->               
 	
-	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find hector_nist_arena_worlds)/worlds/go2011_arena.world" respawn="false" output="screen"/>-->
+	<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find hector_nist_arena_worlds)/worlds/thailand_robot_championship_2012_default.world" respawn="false" output="screen"/>
 	
-	<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/wg_collada.world" respawn="false" output="screen"/>
+	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/wg_collada.world" respawn="false" output="screen"/>-->
 	<node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen"/>
 	
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find volksbot_new)/urdf/volksbot2013.urdf.xacro'" />
@@ -28,13 +28,19 @@
 	<node name = "joy_node" pkg = "joy" type = "joy_node" output = "screen">
 		<param name = "dev" type = "string" value = "/dev/input/js0"/>
 	</node>	
+	
 	<node name = "joy_to_vel" pkg = "ohm_joyToVel" type = "ohm_joyToVel" output = "screen">
 		<param name = "joystickUsed" type = "bool" value = "true"/>
-		<param name = "vel_publisher_topic" type = "string" value = "/cmd_vel"/>
+		<!--<param name = "vel_publisher_topic" type = "string" value = "/cmd_vel"/>-->
 	</node>
-	<node name = "image_view" pkg = "image_view" type = "image_view" output = "screen">
-		<param name = "image" type = "string" value = "/camera/camera/image_raw"/>
-	</node>	 
+	
+	<node pkg = "twist_switch" name = "twist_switch" type = "twist_switch" output = "screen">
+		<param name = "multiplicate" type = "double" value = "2.0"/>
+	</node>	
+	
+	<node name = "image_view" pkg = "image_view" type = "image_view" args = "image:=/camera/camera/image_raw" output = "screen">
+		<param name = "image_transport" type = "string" value = "compressed"/>
+	</node>
 
 </launch>
 
