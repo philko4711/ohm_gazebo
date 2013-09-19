@@ -1,0 +1,17 @@
+<package>
+  <description brief="sound_player">
+
+     sound_player
+
+  </description>
+  <author>Philipp Koch</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sound_player</url>
+  <depend package="roscpp"/>
+  <depend package="audio_common_msgs"/>
+  <depend package="sound_play"/>
+
+</package>
+
+
