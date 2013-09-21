@@ -10,6 +10,7 @@
   <url>http://ros.org/wiki/position_reader</url>
   <depend package="roscpp"/>
   <depend package="gazebo"/>
+  <depend package="sound_player"/>
 
 </package>
 
