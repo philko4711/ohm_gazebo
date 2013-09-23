@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<launch>
+	<node name="spawn_vicbox" pkg="gazebo" type="spawn_model"
+    	args="-x -0.1 -y 0.0 -z 0.5 -pause -urdf -file '$(find volksbot_new)/urdf/vic_box.urdf' -model vicbox"
+    	respawn="false" output="screen" />
+</launch>

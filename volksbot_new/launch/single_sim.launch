@@ -5,21 +5,24 @@
 	 
 	<!-- ############################## Gazebo mit ausgewählter Welt starten ##################################### -->               
 	
-	<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find hector_nist_arena_worlds)/worlds/maze_10m_x_14m.world" respawn="false" output="screen"/>
+	<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find hector_nist_arena_worlds)/worlds/go2011_arena.world" respawn="false" output="screen"/>
 	
+	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/empty.world" respawn="false" output="screen"/>-->
 	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/wg_collada.world" respawn="false" output="screen"/>-->
 	<node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen"/>
 	
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find volksbot_new)/urdf/volksbot2013.urdf.xacro'" />
 	 <node name="spawn_minibot_model" pkg="gazebo" type="spawn_model"
-     args="-z 0.3 -pause -urdf -param robot_description -model rescue_robot"
+     args="-x 11.0 -y 4.0 -z 0.3 -pause -urdf -param robot_description -model rescue_robot"
      respawn="false" output="screen" />
      
-     <param name="r2d2_description" command="$(find xacro)/xacro.py '$(find volksbot_new)/urdf/r2d2.urdf.xacro'" />
-  	<node name="spawn_r2d2" pkg="gazebo" type="spawn_model"
-     args="-x 2.0 -y 2.0 -z 0.5 -pause -urdf -param r2d2_description -model r2d2"
-     respawn="false" output="screen" />
-	
+     <!--<param name="r2d2_description" command="$(find xacro)/xacro.py '$(find volksbot_new)/urdf/vic_box.urdf.xacro'" />-->
+  	<!--<node name="spawn_r2d2" pkg="gazebo" type="spawn_model"
+     args="-x 2.5 -y 2.0 -z 0.5 -pause -urdf -file '$(find volksbot_new)/urdf/vic_box.urdf' -model r2d2"
+     respawn="false" output="screen" />-->
+	<node name="spawn_vicbox" pkg="gazebo" type="spawn_model"
+    	args="-x -0.1 -y 0.0 -z 0.5 -pause -urdf -file '$(find volksbot_new)/urdf/vic_box.urdf' -model vicbox"
+    	respawn="false" output="screen" />
 	
 	<arg name="gui" default="False" />
 		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
@@ -62,7 +65,10 @@
 		<param name = "image_transport" type = "string" value = "compressed"/>
 	</node>
 
-	<node name = "position_reader" pkg = "position_reader" type = "position_reader" output = "screen"/>
+	 <node pkg = "sound_play" name = "soundplay_node" type = "soundplay_node.py"/>
+	 <node pkg = "sound_player" name = "sound_player" type = "sound_player"/>
+	 <node pkg = "position_reader" name = "position_reader" type = "position_reader"/>
+	<!--<node name = "position_reader" pkg = "position_reader" type = "pos_reader" output = "screen"/>-->
 
 </launch>
 
