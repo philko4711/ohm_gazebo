@@ -66,7 +66,10 @@
 	</node>
 
 	 <node pkg = "sound_play" name = "soundplay_node" type = "soundplay_node.py"/>
-	 <node pkg = "sound_player" name = "sound_player" type = "sound_player"/>
+	 <node pkg = "sound_player" name = "sound_player" type = "sound_player">
+	 	<param name = "audio_path" type="string" value = "$(find sound_player)/sounds/"/>
+	 </node>	
+	 
 	 <node pkg = "position_reader" name = "position_reader" type = "position_reader"/>
 	<!--<node name = "position_reader" pkg = "position_reader" type = "pos_reader" output = "screen"/>-->
 
