@@ -40,17 +40,17 @@ void SoundPlayer::audioTypeCallback(const sound_player::AudioType& audioType)
     if(audioType.factor == 1)
       audioPath += "help_full.wav";
     else if(audioType.factor == 2)
-      audioPath += "help_m15.wav";
+      audioPath += "help_m2_5.wav";
     else if(audioType.factor == 3)
-      audioPath += "help_m30.wav";
+      audioPath += "help_m5.wav";
     else if(audioType.factor == 4)
-      audioPath += "help_m50.wav";
+      audioPath += "help_m10.wav";
     else if(audioType.factor == 5)
-      audioPath += "help_m100.wav";
+      audioPath += "help_m15.wav";
     else if(audioType.factor == 6)
-      audioPath += "help_m200.wav";
+      audioPath += "help_m20.wav";
     else if(audioType.factor == 7)
-      audioPath += "help_m300.wav";
+      audioPath += "help_m25.wav";
     else
     {
       std::cout << __PRETTY_FUNCTION__ << " ...this should not happen. Unknown factor!\n";
@@ -58,7 +58,7 @@ void SoundPlayer::audioTypeCallback(const sound_player::AudioType& audioType)
     }
   }
   else if(audioType.type == audioType.TYPE_FOUND)
-    audioPath += "ifoundvictim.wav";
+    audioPath += "thanks_full.wav";
   else
   {
     std::cout << __PRETTY_FUNCTION__ << " ...this should not happen. Unknown type!\n";

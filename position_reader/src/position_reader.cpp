@@ -5,12 +5,14 @@
  *      Author: phil
  */
 
-#include <vector>
+
+/*#include <vector>
 #include <string>
-#include <cmath>
+#include <cmath>*/
+#include "PositionReader.h"
 
 #include <ros/ros.h>
-#include <gazebo_msgs/GetModelState.h>
+/*#include <gazebo_msgs/GetModelState.h>
 #include <gazebo_msgs/ModelStates.h>
 #include <geometry_msgs/Point.h>
 
@@ -18,14 +20,17 @@
 
 #define FOUND 0.6
 #define STEP 0.45
-#define STEPS 7
+#define STEPS 7*/
 
-void positionCallback(const gazebo_msgs::ModelStates& modelState);
+//void positionCallback(const gazebo_msgs::ModelStates& modelState);
 
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "position_reader");
-  ros::NodeHandle nh;
+  PositionReader positionReader;
+  positionReader.start();
+
+  /*ros::NodeHandle nh;
   ros::ServiceClient positionReaderClient = nh.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
   ros::ServiceClient victPosReaderClient = nh.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
   ros::Publisher typePub = nh.advertise<sound_player::AudioType>("audio_type", 1);
@@ -84,10 +89,10 @@ int main(int argc, char** argv)
     std::cout << __PRETTY_FUNCTION__ << " to be published: factor = " << audioType.factor << "\n";
     sleep(3);
     //rate.sleep();
-  }
+  }*/
 }
 
-void positionCallback(const gazebo_msgs::ModelStates& modelState)
+/*void positionCallback(const gazebo_msgs::ModelStates& modelState)
 {
    unsigned int idx = 0;
    for(std::vector<std::string>::const_iterator iter = modelState.name.begin(); iter != modelState.name.end(); iter++)
@@ -103,6 +108,6 @@ void positionCallback(const gazebo_msgs::ModelStates& modelState)
    std::cout << "\nPosition reader got position:\nx = " << modelState.pose[idx].position.x
                 << "\ny = " << modelState.pose[idx].position.y << "\nz = "
                 << modelState.pose[idx].position.z << "\n";//Success ?!: " << static_cast<unsigned char>(req.response.success) << "\n";
-}
+}*/
 
 //rosservice call /gazebo/get_model_state '{model_name: rescue_robot}'
