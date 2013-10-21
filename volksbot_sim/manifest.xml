@@ -1,0 +1,16 @@
+<package>
+  <description brief="volksbot_sim">
+
+     volksbot_sim
+
+  </description>
+  <author>Philipp Koch</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/volksbot_sim</url>
+  <depend package="roscpp"/>
+  <depend package="gazebo"/>
+
+</package>
+
+
