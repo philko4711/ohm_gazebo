@@ -53,6 +53,7 @@ namespace gazebo
 
       physics::JointPtr _rollJoint;
       bool _rollJointSet;
+      int _direction;
 
       /// Separation between the wheels
       float wheel_sep_;

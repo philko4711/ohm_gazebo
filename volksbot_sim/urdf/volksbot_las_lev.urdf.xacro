@@ -569,12 +569,12 @@
 		</inertial>
 	</link>
 <!--position laser_platform-->		
-	<joint name="base_link_to_laser_platform" type="revolute">
+	<joint name="base_link_to_laser_platform" type="continuous">   <!--revolute-->
 	<!--<joint name="base_link_to_laser_platform" type="fixed">-->
 		<parent link="base_link"/>
 		<child link="laser_platform"/>
 		 <axis xyz="1 0 0"/>
-		 <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+		 <!--<limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>-->
 		<origin rpy="0 0 0" xyz="0 0 0.405"/>
 	</joint>	
 	<gazebo reference="platform">
@@ -671,7 +671,8 @@
 
 <!--  ############################  Husky Controller Fuerte  ###################################-->	
 <gazebo>
-			<controller:husky_plugin name="husky_diff_controller" plugin="libhusky_description_new.so">
+	<!--		<controller:husky_plugin name="husky_diff_controller" plugin="libhusky_description_new.so"> -->
+				<controller:husky_plugin name="husky_diff_controller" plugin="libhusky_description_new_exp.so">
 		        <alwaysOn>true</alwaysOn>
 		        <updateRate>100.0</updateRate>  <!-- alt 100 -->
 		        <backLeftJoint>left_back_wheel_joint</backLeftJoint>

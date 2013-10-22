@@ -38,7 +38,7 @@
 #include <sensor_msgs/JointState.h>
 #include <geometry_msgs/Twist.h>
 
-#include <husky_plugin/husky_plugin.h>
+#include <husky_plugin/husky_plugin_exp.h>
 
 #include <ros/time.h>
 
@@ -71,6 +71,7 @@ HuskyPlugin::HuskyPlugin()
   joints_[3].reset();
 
   _rollJoint.reset();
+  _direction = 1;
 }
 
 HuskyPlugin::~HuskyPlugin()
@@ -152,6 +153,13 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   js_.velocity.push_back(0);
   js_.effort.push_back(0);
 
+  /*  new Stuff */
+  js_.name.push_back(_rollJointName);
+  js_.position.push_back(0);
+  js_.velocity.push_back(0);
+  js_.effort.push_back(0);
+  /*  new Stuff */
+
   prev_update_time_ = 0;
   last_cmd_vel_time_ = 0;
 
@@ -163,10 +171,19 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   joints_[FL] = model_->GetJoint(fl_joint_name_);
   joints_[FR] = model_->GetJoint(fr_joint_name_);
 
+  /*  new Stuff */
+  _rollJoint = model_->GetJoint(_rollJointName);
+  /*  new Stuff */
+
   if (joints_[BL]) set_joints_[BL] = true;
   if (joints_[BR]) set_joints_[BR] = true;
   if (joints_[FL]) set_joints_[FL] = true;
   if (joints_[FR]) set_joints_[FR] = true;
+
+  /*  new Stuff */
+  if(_rollJoint)
+	  _rollJointSet = true;
+  /*  new Stuff */
 
   //initialize time and odometry position
   prev_update_time_ = last_cmd_vel_time_ = this->world_->GetSimTime();
@@ -240,6 +257,11 @@ void HuskyPlugin::UpdateChild()
   {
     joints_[FR]->SetVelocity( 0, wheel_speed_[FR] / (wd / 2.0) );
     joints_[FR]->SetMaxForce( 0, torque_ );
+  }
+  if(_rollJointSet)
+  {
+	  _rollJoint->SetVelocity(0, 1000);
+	  _rollJoint->SetMaxForce(0, torque_);
   }
 
 /* vom Guardian_controller (Surface_correction)
@@ -361,6 +383,13 @@ if (set_joints_[FR])
     js_.position[3] = joints_[FR]->GetAngle(0).GetAsRadian();
     js_.velocity[3] = joints_[FR]->GetVelocity(0);
   }
+  //lower="0.0" upper="0.548"
+  if (_rollJointSet)
+  {
+	  js_.position[4] = _rollJoint->GetAngle(0).GetAsRadian();
+	  js_.velocity[4] = _rollJoint->GetVelocity(0);
+  }
+
 
   joint_state_pub_.publish( js_ );
 
