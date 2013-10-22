@@ -43,6 +43,7 @@
 #include <ros/time.h>
 
 #define THRS 1.0
+#define ROLL_VEL 0.1  //constant for testing of the roll joint
 
 using namespace gazebo;
 
@@ -82,7 +83,7 @@ HuskyPlugin::~HuskyPlugin()
   delete [] wheel_speed_;
   delete rosnode_;
 }
-    
+
 void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
 {
   this->model_ = _parent;
@@ -103,7 +104,7 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   wheel_sep_ = 0.415;  
   wheel_diam_ = 0.260;  
   torque_ = 24;   //realer Wert 6 da für alle vier Räder
-  
+
   base_geom_name_ = "base_link";
   base_geom_ = model_->GetChildCollision(base_geom_name_);
 
@@ -182,7 +183,8 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
 
   /*  new Stuff */
   if(_rollJoint)
-	  _rollJointSet = true;
+    _rollJointSet = true;
+  _rollJoint->SetVelocity(0, ROLL_VEL);
   /*  new Stuff */
 
   //initialize time and odometry position
@@ -208,8 +210,8 @@ void HuskyPlugin::UpdateChild()
   ws = wheel_sep_;
   wheel_gauge = 0.280; // bei Centervolksbot.urdf.xacro (Volksbot2013)   für Volksbot.urdf.xacro (Volksbot2012) Achsabstand 0.3
 
-   _slip_correction     = cos(atan2(wheel_gauge, ws));
-   _slip_correction     = _slip_correction * _slip_correction;
+  _slip_correction     = cos(atan2(wheel_gauge, ws));
+  _slip_correction     = _slip_correction * _slip_correction;
 
   d_bl = d_br = d_fl = d_fr = 0;
   dr = da = 0;
@@ -238,7 +240,7 @@ void HuskyPlugin::UpdateChild()
   odom_vel_[1] = 0.0;
   odom_vel_[2] = da / step_time.Double();
 
- if (set_joints_[BL])
+  if (set_joints_[BL])
   {
     joints_[BL]->SetVelocity( 0, wheel_speed_[FL] / (wd/2.0) );  // alt BL    da Volksbot-Räder per Seite mit Kette verbunden
     joints_[BL]->SetMaxForce( 0, torque_ );
@@ -258,13 +260,22 @@ void HuskyPlugin::UpdateChild()
     joints_[FR]->SetVelocity( 0, wheel_speed_[FR] / (wd / 2.0) );
     joints_[FR]->SetMaxForce( 0, torque_ );
   }
+  double rollVelocity = 0.0;
+  double angleVar = 0.0;
   if(_rollJointSet)
   {
-	  _rollJoint->SetVelocity(0, 1000);
-	  _rollJoint->SetMaxForce(0, torque_);
+    angleVar =_rollJoint->GetAngle(0).GetAsRadian();
+    if((angleVar > M_PI) && _rollJoint->GetVelocity(0) > 0.0)
+      _rollJoint->SetVelocity(0, (-1.0) * ROLL_VEL);
+
+    else if((angleVar < (-1.0) * M_PI) && _rollJoint->GetVelocity(0) < 0.0)
+      _rollJoint->SetVelocity(0, ROLL_VEL);
+
+
+    _rollJoint->SetMaxForce(0, torque_);
   }
 
-/* vom Guardian_controller (Surface_correction)
+  /* vom Guardian_controller (Surface_correction)
 
   double v_left_mps, v_right_mps;
 
@@ -315,8 +326,8 @@ if (set_joints_[FR])
 {    joints_[FR]->SetVelocity(0, (vr  + va * (wheel_sep_) / 2) );
     joints_[FR]->SetMaxForce( 0, torque_ );
 }
-    
-*/
+
+   */
 
 
 
@@ -339,11 +350,11 @@ if (set_joints_[FR])
   odom.pose.pose.orientation.w = qt.getW();
 
   double pose_cov[36] = { 1e-3, 0, 0, 0, 0, 0,
-                          0, 1e-3, 0, 0, 0, 0,
-                          0, 0, 1e6, 0, 0, 0,
-                          0, 0, 0, 1e6, 0, 0,
-                          0, 0, 0, 0, 1e6, 0,
-                          0, 0, 0, 0, 0, 1e3};
+      0, 1e-3, 0, 0, 0, 0,
+      0, 0, 1e6, 0, 0, 0,
+      0, 0, 0, 1e6, 0, 0,
+      0, 0, 0, 0, 1e6, 0,
+      0, 0, 0, 0, 0, 1e3};
 
   memcpy( &odom.pose.covariance[0], pose_cov, sizeof(double)*36 );
   memcpy( &odom.twist.covariance[0], pose_cov, sizeof(double)*36 );
@@ -384,14 +395,14 @@ if (set_joints_[FR])
     js_.velocity[3] = joints_[FR]->GetVelocity(0);
   }
   //lower="0.0" upper="0.548"
-  if (_rollJointSet)
-  {
-	  js_.position[4] = _rollJoint->GetAngle(0).GetAsRadian();
-	  js_.velocity[4] = _rollJoint->GetVelocity(0);
-  }
+      if (_rollJointSet)
+      {
+        js_.position[4] = _rollJoint->GetAngle(0).GetAsRadian();
+        js_.velocity[4] = _rollJoint->GetVelocity(0);
+      }
 
 
-  joint_state_pub_.publish( js_ );
+      joint_state_pub_.publish( js_ );
 
 }
 
@@ -403,23 +414,23 @@ void HuskyPlugin::OnCmdVel( const geometry_msgs::TwistConstPtr &msg)
   vr = msg->linear.x;
   va = msg->angular.z;
 
-/* Begrenzung der cmd_vel - Joystick ist zwar in der gazebo_joystick node auf +-1.39 limitiert aber die move_base-Node könnte schneller drehen lassen...  -> Odometriefehler */
-/* Your englisch is also not the yellow of the egg!*/
-if (msg->angular.z >= THRS)//0.35)
-{
-   va = THRS;
-}
-else if (msg->angular.z <= (-1.0) * THRS)//-0.35)
-{
-   va = (-1.0) * THRS;//-0.35;
-}
-else
-{
-   va = msg->angular.z;
-}
+  /* Begrenzung der cmd_vel - Joystick ist zwar in der gazebo_joystick node auf +-1.39 limitiert aber die move_base-Node könnte schneller drehen lassen...  -> Odometriefehler */
+  /* Your englisch is also not the yellow of the egg!*/
+  if (msg->angular.z >= THRS)//0.35)
+  {
+    va = THRS;
+  }
+  else if (msg->angular.z <= (-1.0) * THRS)//-0.35)
+  {
+    va = (-1.0) * THRS;//-0.35;
+  }
+  else
+  {
+    va = msg->angular.z;
+  }
 
-//  wheel_speed_[BL] = vr - va * (wheel_sep_) / 2;
-//  wheel_speed_[BR] = vr + va * (wheel_sep_) / 2;
+  //  wheel_speed_[BL] = vr - va * (wheel_sep_) / 2;
+  //  wheel_speed_[BR] = vr + va * (wheel_sep_) / 2;
   wheel_speed_[FL] = vr - va * (wheel_sep_) / 2;
   wheel_speed_[FR] = vr + va * (wheel_sep_) / 2;
 }

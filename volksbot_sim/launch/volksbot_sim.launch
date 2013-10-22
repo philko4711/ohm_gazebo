@@ -23,7 +23,7 @@
     	args="-x -0.1 -y 0.0 -z 0.5 -pause -urdf -file '$(find volksbot_new)/urdf/vic_box.urdf' -model vicbox"
     	respawn="false" output="screen" />-->
 	
-	<arg name="gui" default="true" />
+	<arg name="gui" default="false" />
 		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
 			<param name="rate" type="double" value="1000.0" />
 			<param name="use_gui" value="$(arg gui)"/>
@@ -47,14 +47,13 @@
 		<param name="tf_prefix" type="string" value="" />
 	</node>	
           	
-	<node name = "joy_node" pkg = "joy" type = "joy_node" output = "screen">
+	<!--<node name = "joy_node" pkg = "joy" type = "joy_node" output = "screen">
 		<param name = "dev" type = "string" value = "/dev/input/js1"/>
 	</node>	
 	
 	<node name = "joy_to_vel" pkg = "ohm_joyToVel" type = "ohm_joyToVel" output = "screen">
 		<param name = "joystickUsed" type = "bool" value = "true"/>
-		<!--<param name = "vel_publisher_topic" type = "string" value = "/cmd_vel"/>-->
-	</node>
+	</node> -->
 	
 	<node pkg = "twist_switch" name = "twist_switch" type = "twist_switch" output = "screen">
 		<param name = "multiplicate" type = "double" value = "2.0"/>
