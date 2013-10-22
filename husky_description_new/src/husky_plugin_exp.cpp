@@ -44,6 +44,7 @@
 
 #define THRS 1.0
 #define ROLL_VEL 0.1  //constant for testing of the roll joint
+#define TILT_VEL 0.1  //constant for testing of the tilt joint
 
 using namespace gazebo;
 
@@ -64,15 +65,21 @@ HuskyPlugin::HuskyPlugin()
   set_joints_[2] = false;
   set_joints_[3] = false;
 
+  //new stuff
   _rollJointSet = false;
+  _tiltJointSet = false;
+  //new stuff
 
   joints_[0].reset();
   joints_[1].reset();
   joints_[2].reset();
   joints_[3].reset();
 
+  //new stuff
   _rollJoint.reset();
-  _direction = 1;
+  _tiltJoint.reset();
+  //new stuff
+
 }
 
 HuskyPlugin::~HuskyPlugin()
@@ -99,7 +106,10 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   fl_joint_name_ = "left_front_wheel_joint";
   fr_joint_name_ = "right_front_wheel_joint";
 
-  _rollJointName = "base_link_to_laser_platform";
+  //new stuff
+  _rollJointName = "base_link_to_roll_tilt_base";
+  _tiltJointName = "roll_tilt_base_to_laser_platform";//"base_link_to_laser_platform";
+  //new stuff
 
   wheel_sep_ = 0.415;  
   wheel_diam_ = 0.260;  
@@ -159,7 +169,14 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   js_.position.push_back(0);
   js_.velocity.push_back(0);
   js_.effort.push_back(0);
+
+  js_.name.push_back(_tiltJointName);
+  js_.position.push_back(0);
+  js_.velocity.push_back(0);
+  js_.effort.push_back(0);
   /*  new Stuff */
+
+
 
   prev_update_time_ = 0;
   last_cmd_vel_time_ = 0;
@@ -174,6 +191,7 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
 
   /*  new Stuff */
   _rollJoint = model_->GetJoint(_rollJointName);
+  _tiltJoint = model_->GetJoint(_tiltJointName);
   /*  new Stuff */
 
   if (joints_[BL]) set_joints_[BL] = true;
@@ -183,8 +201,17 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
 
   /*  new Stuff */
   if(_rollJoint)
+  {
     _rollJointSet = true;
-  _rollJoint->SetVelocity(0, ROLL_VEL);
+    _rollJoint->SetVelocity(0, ROLL_VEL);
+  }
+  if(_tiltJoint)
+  {
+    _tiltJointSet = true;
+    _tiltJoint->SetVelocity(0, TILT_VEL);
+  }
+//  else
+//    std::exit(1);
   /*  new Stuff */
 
   //initialize time and odometry position
@@ -260,20 +287,27 @@ void HuskyPlugin::UpdateChild()
     joints_[FR]->SetVelocity( 0, wheel_speed_[FR] / (wd / 2.0) );
     joints_[FR]->SetMaxForce( 0, torque_ );
   }
-  double rollVelocity = 0.0;
+  // new stuff
   double angleVar = 0.0;
   if(_rollJointSet)
   {
     angleVar =_rollJoint->GetAngle(0).GetAsRadian();
-    if((angleVar > M_PI) && _rollJoint->GetVelocity(0) > 0.0)
+    if((angleVar > (M_PI / 2)) && _rollJoint->GetVelocity(0) > 0.0)
       _rollJoint->SetVelocity(0, (-1.0) * ROLL_VEL);
-
-    else if((angleVar < (-1.0) * M_PI) && _rollJoint->GetVelocity(0) < 0.0)
+    else if((angleVar < (-1.0) * (M_PI / 2)) && _rollJoint->GetVelocity(0) < 0.0)
       _rollJoint->SetVelocity(0, ROLL_VEL);
-
-
     _rollJoint->SetMaxForce(0, torque_);
   }
+  if(_tiltJointSet)
+  {
+    angleVar = _tiltJoint->GetAngle(0).GetAsRadian();
+    if((angleVar > (M_PI / 2)) && _tiltJoint->GetVelocity(0) > 0.0)
+      _tiltJoint->SetVelocity(0, (-1.0) * ROLL_VEL);
+    else if((angleVar < (-1.0) * (M_PI / 2)) && _tiltJoint->GetVelocity(0) < 0.0)
+      _tiltJoint->SetVelocity(0, ROLL_VEL);
+    _tiltJoint->SetMaxForce(0, torque_);
+  }
+  // new stuff
 
   /* vom Guardian_controller (Surface_correction)
 
@@ -394,15 +428,21 @@ if (set_joints_[FR])
     js_.position[3] = joints_[FR]->GetAngle(0).GetAsRadian();
     js_.velocity[3] = joints_[FR]->GetVelocity(0);
   }
-  //lower="0.0" upper="0.548"
-      if (_rollJointSet)
-      {
-        js_.position[4] = _rollJoint->GetAngle(0).GetAsRadian();
-        js_.velocity[4] = _rollJoint->GetVelocity(0);
-      }
 
+  //new stuff
+  if (_rollJointSet)
+  {
+    js_.position[4] = _rollJoint->GetAngle(0).GetAsRadian();
+    js_.velocity[4] = _rollJoint->GetVelocity(0);
+  }
+  if (_tiltJointSet)
+  {
+    js_.position[5] = _tiltJoint->GetAngle(0).GetAsRadian();
+    js_.velocity[5] = _tiltJoint->GetVelocity(0);
+  }
+  //new stuff
 
-      joint_state_pub_.publish( js_ );
+  joint_state_pub_.publish( js_ );
 
 }
 

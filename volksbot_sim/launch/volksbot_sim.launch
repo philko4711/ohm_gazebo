@@ -6,8 +6,8 @@
 	<!-- ############################## Gazebo mit ausgewählter Welt starten ##################################### -->               
 	
 	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find hector_nist_arena_worlds)/worlds/go2011_arena.world" respawn="false" output="screen"/>-->
-	<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/empty.world" respawn="false" output="screen"/>
-	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/wg_collada.world" respawn="false" output="screen"/>-->
+	<!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/empty.world" respawn="false" output="screen"/>-->
+	<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/wg_collada.world" respawn="false" output="screen"/>
 	<node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen"/>
 	
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find volksbot_sim)/urdf/volksbot_las_lev.urdf.xacro'" />

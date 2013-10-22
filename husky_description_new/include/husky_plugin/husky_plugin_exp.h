@@ -50,10 +50,14 @@ namespace gazebo
       std::string base_geom_name_;
 
       std::string _rollJointName;
+      std::string _tiltJointName;
 
+      //new stuff
       physics::JointPtr _rollJoint;
       bool _rollJointSet;
-      int _direction;
+      physics::JointPtr _tiltJoint;
+      bool _tiltJointSet;
+      //new stuff
 
       /// Separation between the wheels
       float wheel_sep_;
