@@ -1,0 +1,15 @@
+<package>
+  <description brief="pid_tester">
+
+     pid_tester
+
+  </description>
+  <author>Philipp Koch</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/pid_tester</url>
+  <depend package="roscpp"/>
+
+</package>
+
+

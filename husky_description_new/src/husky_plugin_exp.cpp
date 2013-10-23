@@ -38,6 +38,8 @@
 #include <sensor_msgs/JointState.h>
 #include <geometry_msgs/Twist.h>
 
+#include <control_toolbox/pid.h>
+
 #include <husky_plugin/husky_plugin_exp.h>
 
 #include <ros/time.h>
