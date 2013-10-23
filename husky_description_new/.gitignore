@@ -2,4 +2,6 @@ lib
 CMakeCache.txt
 CMakeFiles
 Makefile
-cmake_install.cmake
+cmake_install.cmakesrc/
+husky_description_new/
+srv_gen/
