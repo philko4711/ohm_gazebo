@@ -21,9 +21,14 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #uncomment if you have defined services
 #rosbuild_gensrv()
 
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
+
 FIND_PACKAGE(Qt4 REQUIRED)
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
+
+SET(PID_TEST_HEADERS src/PidTesterGui.h)
+QT4_WRAP_CPP(PID_TEST_HEADERS_MOC ${PID_TEST_HEADERS})
 
 SET(PID_TEST_FORMS src/pid_tester_gui.ui)
 QT4_WRAP_UI(PID_TEST_FORMS_HEADERS ${PID_TEST_FORMS})
@@ -34,5 +39,7 @@ QT4_WRAP_UI(PID_TEST_FORMS_HEADERS ${PID_TEST_FORMS})
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 rosbuild_add_executable(pid_tester src/pid_tester.cpp
-                                    ${PID_TEST_FORMS_HEADERS})
+                                   src/PidTesterGui.cpp
+                                   ${PID_TEST_HEADERS_MOC}
+                                   ${PID_TEST_FORMS_HEADERS})
 target_link_libraries(pid_tester ${QT_LIBRARIES})
