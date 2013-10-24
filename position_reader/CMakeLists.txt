@@ -30,4 +30,7 @@ rosbuild_add_executable(position_reader
                             src/position_reader.cpp
                             src/PositionReader.cpp
                             )
+rosbuild_add_executable(rotation_reader
+                            src/rotation_reader.cpp
+                        )
 #target_link_libraries(example ${PROJECT_NAME})

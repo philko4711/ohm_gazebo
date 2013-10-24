@@ -1,126 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>PidTestUi</class>
+ <widget class="QWidget" name="PidTestUi">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>367</width>
-    <height>409</height>
+    <width>663</width>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>PidTest</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <property name="toolTip">
+   <string comment="Heini" extracomment="Wer das liest ist doof"/>
+  </property>
+  <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>368</width>
+     <width>661</width>
      <height>411</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QSlider" name="pSlider">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>13</width>
-          <height>373</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QSlider" name="iSlider">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QSlider" name="dSlider">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QSlider" name="angleSlider">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>P</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLCDNumber" name="pLcd"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="iLabel">
         <property name="text">
          <string>I</string>
         </property>
@@ -129,8 +38,40 @@
       <item>
        <widget class="QLCDNumber" name="iLcd"/>
       </item>
+     </layout>
+    </item>
+    <item row="1" column="4">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="tiltLabel">
+        <property name="text">
+         <string>TiltAngle</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="tiltAngleLcd"/>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="pLabel">
+        <property name="text">
+         <string>P</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="pLcd"/>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="dLabel">
         <property name="text">
          <string>D</string>
         </property>
@@ -139,15 +80,86 @@
       <item>
        <widget class="QLCDNumber" name="dLcd"/>
       </item>
+     </layout>
+    </item>
+    <item row="1" column="3">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="rollLabel">
         <property name="text">
-         <string>Angle</string>
+         <string>RollAngle</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="angleLcd"/>
+       <widget class="QLCDNumber" name="rollAngleLcd"/>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QSlider" name="pSlider">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QSlider" name="iSlider">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <item>
+       <widget class="QSlider" name="dSlider">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="3">
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <item>
+       <widget class="QSlider" name="rollAngleSlider">
+        <property name="minimum">
+         <number>-314</number>
+        </property>
+        <property name="maximum">
+         <number>314</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="4">
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
+      <item>
+       <widget class="QSlider" name="tiltAngleSlider">
+        <property name="minimum">
+         <number>-314</number>
+        </property>
+        <property name="maximum">
+         <number>314</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -163,12 +175,12 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>650</x>
-     <y>269</y>
+     <x>229</x>
+     <y>421</y>
     </hint>
     <hint type="destinationlabel">
-     <x>641</x>
-     <y>477</y>
+     <x>279</x>
+     <y>558</y>
     </hint>
    </hints>
   </connection>
@@ -179,12 +191,12 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>711</x>
-     <y>269</y>
+     <x>356</x>
+     <y>421</y>
     </hint>
     <hint type="destinationlabel">
-     <x>699</x>
-     <y>477</y>
+     <x>406</x>
+     <y>558</y>
     </hint>
    </hints>
   </connection>
@@ -195,28 +207,44 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>772</x>
-     <y>269</y>
+     <x>481</x>
+     <y>420</y>
     </hint>
     <hint type="destinationlabel">
-     <x>765</x>
-     <y>477</y>
+     <x>533</x>
+     <y>558</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>angleSlider</sender>
+   <sender>rollAngleSlider</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>angleLcd</receiver>
+   <receiver>rollAngleLcd</receiver>
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>833</x>
-     <y>269</y>
+     <x>618</x>
+     <y>421</y>
     </hint>
     <hint type="destinationlabel">
-     <x>859</x>
-     <y>477</y>
+     <x>677</x>
+     <y>558</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tiltAngleSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>tiltAngleLcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>751</x>
+     <y>339</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>547</y>
     </hint>
    </hints>
   </connection>

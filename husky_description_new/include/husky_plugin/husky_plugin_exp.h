@@ -16,6 +16,8 @@
 #include <tf/transform_broadcaster.h>
 #include <ros/ros.h>
 
+#include "husky_description_new/set_ctrl_param.h"
+#include "control_toolbox/pid.h"
 
 /*
  * Desc: Gazebo 1.x plugin for a Clearpath Robotics Husky A200
@@ -39,6 +41,10 @@ namespace gazebo
 
       void OnContact(const std::string &name, const physics::Contact &contact);
       void OnCmdVel( const geometry_msgs::TwistConstPtr &msg);
+      //new stuff
+      bool setCtrlParamServCallBack(husky_description_new::set_ctrl_param::Request& req, husky_description_new::set_ctrl_param::Response& res);
+      //new stuff
+
 
 
       /// Parameters
@@ -57,6 +63,16 @@ namespace gazebo
       bool _rollJointSet;
       physics::JointPtr _tiltJoint;
       bool _tiltJointSet;
+      ros::ServiceServer _setPIDParamServ;
+
+      double _pVal;
+      double _iVal;
+      double _dVal;
+      double _setRollAngle;
+      double _setTiltAngle;
+
+      control_toolbox::Pid* _pidControler;
+      ros::ServiceServer _setCtrlParamService;
       //new stuff
 
       /// Separation between the wheels

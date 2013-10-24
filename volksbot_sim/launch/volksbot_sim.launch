@@ -47,13 +47,13 @@
 		<param name="tf_prefix" type="string" value="" />
 	</node>	
           	
-	<!--<node name = "joy_node" pkg = "joy" type = "joy_node" output = "screen">
-		<param name = "dev" type = "string" value = "/dev/input/js1"/>
+	<node name = "joy_node" pkg = "joy" type = "joy_node" output = "screen">
+		<param name = "dev" type = "string" value = "/dev/input/js0"/>
 	</node>	
 	
 	<node name = "joy_to_vel" pkg = "ohm_joyToVel" type = "ohm_joyToVel" output = "screen">
 		<param name = "joystickUsed" type = "bool" value = "true"/>
-	</node> -->
+	</node>
 	
 	<node pkg = "twist_switch" name = "twist_switch" type = "twist_switch" output = "screen">
 		<param name = "multiplicate" type = "double" value = "2.0"/>

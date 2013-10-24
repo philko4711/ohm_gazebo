@@ -11,6 +11,8 @@
 #include <QWidget>
 #include <QObject>
 
+#include <ros/ros.h>
+
 #include "ui_pid_tester_gui.h"
 
 class PidTesterGui: public QWidget
@@ -22,7 +24,9 @@ public:
 public slots:
   void dataChanged(void);
 private:
-  Ui::Form* _pidTesterGui;
+  Ui::PidTestUi* _pidTesterGui;
+  ros::NodeHandle _nh;
+  ros::ServiceClient _setCtrlParamService;
 };
 
 #endif /* PIDTESTERGUI_H_ */
