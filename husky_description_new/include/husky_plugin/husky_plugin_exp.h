@@ -64,7 +64,7 @@ namespace gazebo
       physics::JointPtr _tiltJoint;
       bool _tiltJointSet;
       ros::ServiceServer _setPIDParamServ;
-
+      ros::ServiceClient _positionReaderClient;
       double _pVal;
       double _iVal;
       double _dVal;

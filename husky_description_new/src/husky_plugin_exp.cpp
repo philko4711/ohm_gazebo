@@ -38,9 +38,12 @@
 #include <sensor_msgs/JointState.h>
 #include <geometry_msgs/Twist.h>
 
+//new stuff
 #include <control_toolbox/pid.h>
-
+#include <gazebo_msgs/GetModelState.h>
 #include <husky_plugin/husky_plugin_exp.h>
+#include <tf/tf.h>
+//new stuff
 
 #include <ros/time.h>
 
@@ -54,7 +57,7 @@ using namespace gazebo;
 enum {BL= 0, BR=1, FL=2, FR=3};
 
 HuskyPlugin::HuskyPlugin() :
-												_pVal(0.0),
+												_pVal(9.9),
 												_iVal(0.0),
 												_dVal(0.0),
 												_setRollAngle(0.0),
@@ -157,6 +160,7 @@ void HuskyPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
 
 	//new stuff
 	_setCtrlParamService = rosnode_->advertiseService("/husky_plugin/set_ctrl_param", &HuskyPlugin::setCtrlParamServCallBack, this);
+	_positionReaderClient = rosnode_->serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
 	//new stuff
 
 	js_.name.push_back( bl_joint_name_ );
@@ -308,7 +312,27 @@ void HuskyPlugin::UpdateChild()
 		joints_[FR]->SetMaxForce( 0, torque_ );
 	}
 	// new stuff
-	double angleVar = 0.0;
+	gazebo_msgs::GetModelState poseReq;
+	poseReq.request.model_name = "rescue_robot";
+	if(!_positionReaderClient.call(poseReq))
+    {
+        std::cout << __PRETTY_FUNCTION__ << " call of service failed!\n";
+        _setRollAngle = _rollJoint->GetAngle(0).GetAsRadian();
+        _setTiltAngle = _tiltJoint->GetAngle(0).GetAsRadian();
+    }
+	else
+	{
+	  tf::Quaternion quat(poseReq.response.pose.orientation.x, poseReq.response.pose.orientation.y,
+	                      poseReq.response.pose.orientation.z, poseReq.response.pose.orientation.w);
+      tf::Matrix3x3 m(quat);
+      double roll = 0.0;
+      double pitch = 0.0;
+      double yaw = 0.0;
+      m.getRPY(roll, pitch, yaw);
+	  _setRollAngle = (-1.0) * roll;
+	  _setTiltAngle = (-1.0) * pitch;
+	}
+
 	if(_rollJointSet)
 	{
 		//double effort = pid.updatePid(currentPosition() - position_desi_, time - last_time);
