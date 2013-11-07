@@ -1,0 +1,18 @@
+<package>
+  <description brief="ohm_gaz_laser_lev">
+
+     ohm_gaz_laser_lev
+
+  </description>
+  <author>Philipp Koch</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ohm_gaz_laser_lev</url>
+  <depend package="roscpp"/>
+  <depend package="gazebo"/>
+  <depend package="rospy"/>
+  <depend package="control_toolbox"/>
+
+</package>
+
+
