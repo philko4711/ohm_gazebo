@@ -6,7 +6,7 @@
  */
 
 #include "PidTesterGui.h"
-#include "husky_description_new/set_ctrl_param.h"
+#include "ohm_gaz_laser_lev/set_ctrl_param.h"
 
 #include <string>
 
@@ -23,8 +23,8 @@ _pidTesterGui(new Ui::PidTestUi)
   connect(_pidTesterGui->tiltAngleSlider, SIGNAL(valueChanged(int)), this, SLOT(dataChanged()));
   ros::NodeHandle prvNh("~");
   std::string strVar;
-  prvNh.param("set_ctrl_pram_topic", strVar, std::string("/husky_plugin/set_ctrl_param"));
-  _setCtrlParamService = _nh.serviceClient<husky_description_new::set_ctrl_param>(strVar);
+  prvNh.param("set_ctrl_pram_topic", strVar, std::string("/ohm_gaz_laser_lev/set_ctrl_param"));
+  _setCtrlParamService = _nh.serviceClient<ohm_gaz_laser_lev::set_ctrl_param>(strVar);
 }
 
 PidTesterGui::~PidTesterGui()
@@ -37,7 +37,7 @@ void PidTesterGui::dataChanged(void)
 //  qDebug() << __PRETTY_FUNCTION__ << "\n\tP = " << _pidTesterGui->pSlider->value() << "\n\tI = "
 //           << _pidTesterGui->iSlider->value() << "\n\tD = " << _pidTesterGui->dSlider->value()
 //           << "\n\tangle = " << _pidTesterGui->angleSlider->value() << "\n";
-  husky_description_new::set_ctrl_param servCall;
+  ohm_gaz_laser_lev::set_ctrl_param servCall;
   servCall.request.pVal = static_cast<double>(_pidTesterGui->pSlider->value()) / 10.0;
   servCall.request.iVal = static_cast<double>(_pidTesterGui->iSlider->value()) / 10.0;
   servCall.request.dVal = static_cast<double>(_pidTesterGui->dSlider->value()) / 10.0;

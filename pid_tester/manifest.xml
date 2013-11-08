@@ -9,7 +9,7 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/pid_tester</url>
   <depend package = "roscpp"/>
-  <depend package = "husky_description_new"/>
+  <depend package = "ohm_gaz_laser_lev"/>
 
 </package>
 
