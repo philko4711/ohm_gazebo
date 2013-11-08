@@ -698,8 +698,8 @@
 
 <!--  ############################  Husky Controller Fuerte  ###################################-->	
 <gazebo>
-	<!--		<controller:husky_plugin name="husky_diff_controller" plugin="libhusky_description_new.so"> -->
-				<controller:husky_plugin name="husky_diff_controller" plugin="libhusky_description_new_exp.so">
+			<controller:husky_plugin name="husky_diff_controller" plugin="libhusky_description_new.so">
+				<!--<controller:husky_plugin name="husky_diff_controller" plugin="libhusky_description_new_exp.so">-->
 		        <alwaysOn>true</alwaysOn>
 		        <updateRate>100.0</updateRate>  <!-- alt 100 -->
 		        <backLeftJoint>left_back_wheel_joint</backLeftJoint>
@@ -711,6 +711,14 @@
 		        <torque>6</torque>  <!--24 alt  24/4 = 6.0-->
         </controller:husky_plugin>
 	</gazebo> 
+
+<!-- ######################### Laser Level Controller ##################################### -->
+ <gazebo>   
+    <controller:laser_level_plugin name="laser_level_controller" plugin="libohm_gaz_laser_lev.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>100.0</updateRate>  <!-- alt 100 -->
+    </controller:laser_level_plugin>
+</gazebo> 
 
   <!-- #################################### IMU SENSOR ################################### -->
 
