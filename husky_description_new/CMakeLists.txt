@@ -19,7 +19,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #uncomment if you have defined messages
 #rosbuild_genmsg()
 #uncomment if you have defined services
-rosbuild_gensrv()
+#rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
@@ -34,7 +34,6 @@ rosbuild_gensrv()
 if($ENV{ROS_DISTRO} STREQUAL "fuerte")
   # Fuerte
   rosbuild_add_library(${PROJECT_NAME} src/husky_plugin.cpp)
-  rosbuild_add_library(${PROJECT_NAME}_exp src/husky_plugin_exp.cpp)
 else()
   # Electric and earlier
   rosbuild_add_library(${PROJECT_NAME} src/husky_controller.cpp)
