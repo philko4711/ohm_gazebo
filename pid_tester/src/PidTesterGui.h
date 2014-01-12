@@ -23,6 +23,8 @@ public:
   virtual ~PidTesterGui();
 public slots:
   void dataChanged(void);
+  void jumpPos(void);
+  void jumpNeg(void);
 private:
   Ui::PidTestUi* _pidTesterGui;
   ros::NodeHandle _nh;

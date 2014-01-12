@@ -21,6 +21,8 @@ _pidTesterGui(new Ui::PidTestUi)
   connect(_pidTesterGui->dSlider, SIGNAL(valueChanged(int)), this, SLOT(dataChanged()));
   connect(_pidTesterGui->rollAngleSlider, SIGNAL(valueChanged(int)), this, SLOT(dataChanged()));
   connect(_pidTesterGui->tiltAngleSlider, SIGNAL(valueChanged(int)), this, SLOT(dataChanged()));
+  connect(_pidTesterGui->posJumpButton, SIGNAL(clicked()), this, SLOT(jumpPos()));
+  connect(_pidTesterGui->negJumpButton, SIGNAL(clicked()), this, SLOT(jumpNeg()));
   ros::NodeHandle prvNh("~");
   std::string strVar;
   prvNh.param("set_ctrl_pram_topic", strVar, std::string("/ohm_gaz_laser_lev/set_ctrl_param"));
@@ -34,9 +36,9 @@ PidTesterGui::~PidTesterGui()
 
 void PidTesterGui::dataChanged(void)
 {
-//  qDebug() << __PRETTY_FUNCTION__ << "\n\tP = " << _pidTesterGui->pSlider->value() << "\n\tI = "
-//           << _pidTesterGui->iSlider->value() << "\n\tD = " << _pidTesterGui->dSlider->value()
-//           << "\n\tangle = " << _pidTesterGui->angleSlider->value() << "\n";
+  //  qDebug() << __PRETTY_FUNCTION__ << "\n\tP = " << _pidTesterGui->pSlider->value() << "\n\tI = "
+  //           << _pidTesterGui->iSlider->value() << "\n\tD = " << _pidTesterGui->dSlider->value()
+  //           << "\n\tangle = " << _pidTesterGui->angleSlider->value() << "\n";
   ohm_gaz_laser_lev::set_ctrl_param servCall;
   servCall.request.pVal = static_cast<double>(_pidTesterGui->pSlider->value()) / 10.0;
   servCall.request.iVal = static_cast<double>(_pidTesterGui->iSlider->value()) / 10.0;
@@ -44,5 +46,28 @@ void PidTesterGui::dataChanged(void)
   servCall.request.rollAngle = static_cast<double>(_pidTesterGui->rollAngleSlider->value()) / 100.0;
   servCall.request.tiltAngle = static_cast<double>(_pidTesterGui->tiltAngleSlider->value()) / 100.0;
   if(!_setCtrlParamService.call(servCall))
-	  qDebug() << __PRETTY_FUNCTION__ << " call of setPidparam service failed!\n";
+    qDebug() << __PRETTY_FUNCTION__ << " call of setPidparam service failed!\n";
+}
+
+void PidTesterGui::jumpPos(void)
+{
+  ohm_gaz_laser_lev::set_ctrl_param servCall;
+  servCall.request.pVal = static_cast<double>(_pidTesterGui->pSlider->value()) / 10.0;
+  servCall.request.iVal = static_cast<double>(_pidTesterGui->iSlider->value()) / 10.0;
+  servCall.request.dVal = static_cast<double>(_pidTesterGui->dSlider->value()) / 10.0;
+  servCall.request.rollAngle = M_PI;
+  servCall.request.tiltAngle = 0.0;
+  if(!_setCtrlParamService.call(servCall))
+    qDebug() << __PRETTY_FUNCTION__ << " call of setPidparam service failed!\n";
+}
+void PidTesterGui::jumpNeg(void)
+{
+  ohm_gaz_laser_lev::set_ctrl_param servCall;
+  servCall.request.pVal = static_cast<double>(_pidTesterGui->pSlider->value()) / 10.0;
+  servCall.request.iVal = static_cast<double>(_pidTesterGui->iSlider->value()) / 10.0;
+  servCall.request.dVal = static_cast<double>(_pidTesterGui->dSlider->value()) / 10.0;
+  servCall.request.rollAngle = -M_PI;
+  servCall.request.tiltAngle = 0.0;
+  if(!_setCtrlParamService.call(servCall))
+    qDebug() << __PRETTY_FUNCTION__ << " call of setPidparam service failed!\n";
 }
