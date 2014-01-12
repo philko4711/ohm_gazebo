@@ -15,6 +15,7 @@
 #include <transport/TransportTypes.hh>
 #include <control_toolbox/pid.h>
 #include <sensor_msgs/JointState.h>
+#include <boost/thread.hpp>
 #include "ohm_gaz_laser_lev/set_ctrl_param.h"
 
 #include <string>
@@ -27,7 +28,10 @@ namespace gazebo
 #define TILT_VEL 0.1  //constant for testing of the tilt joint
 #define INTGR_MIN -50.0  //constants for testing of the pid controller (integral limits)
 #define INTGR_MAX 50.0  //toDo:integrate into the PID Tester
-#define TORQUE 5.0 //experimental magic number for the torque of the joints
+#define TORQUE 20.0 //experimental magic number for the torque of the joints
+#define P_VAL 14.8  //P value of the PID controller
+#define I_VAL 17.8  //I value of the PID controller
+#define D_VAL 0.0   //D value of the PID controller
 
 class LaserLevelPlugin : public ModelPlugin
 {

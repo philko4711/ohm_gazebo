@@ -5,10 +5,9 @@
  *      Author: phil
  */
 
-#include <boost/thread.hpp>
 #include "LaserLevelPlugin.h"
-#include "physics/physics.h"
-#include "physics/PhysicsTypes.hh"
+#include <physics/physics.h>
+#include <physics/PhysicsTypes.hh>
 #include "sensors/SensorTypes.hh"
 #include "transport/TransportTypes.hh"
 #include "common/Time.hh"
@@ -25,12 +24,14 @@
 #include <gazebo_msgs/GetModelState.h>
 #include <tf/tf.h>
 
+#include <fstream>
+
 using namespace gazebo;
 
 LaserLevelPlugin::LaserLevelPlugin() :
-                _pVal(9.9),
-                _iVal(0.0),
-                _dVal(0.0),
+                _pVal(P_VAL),
+                _iVal(I_VAL),
+                _dVal(D_VAL),
                 _setRollAngle(0.0),
                 _setTiltAngle(0.0),
                 _torque(TORQUE),
@@ -118,8 +119,13 @@ void LaserLevelPlugin::Load(physics::ModelPtr parent, sdf::ElementPtr sdf)
 
 void LaserLevelPlugin::UpdateChild(void)
 {
+//  std::fstream stream;
+//  static double allTime = 0.0;
+//  stream.open("data.txt", std::fstream::out | std::fstream::app);
   common::Time timeNow = _world->GetSimTime();
   common::Time stepTime = timeNow - _prevUpdateTime;
+//  allTime += stepTime.Double();
+//  stream << allTime << " " << _rollJoint->GetAngle(0).GetAsRadian() << " " << _setRollAngle;
   _prevUpdateTime = timeNow;
   ros::Duration timeStep(stepTime.Double());
   double levelVelocity = 0.0;    //output off the pid controller that levels the laser
@@ -147,6 +153,7 @@ void LaserLevelPlugin::UpdateChild(void)
   if(_rollJointSet)
   {
     levelVelocity = _pidControler->updatePid(_setRollAngle - _rollJoint->GetAngle(0).GetAsRadian(), timeStep);
+//    stream << " " <<levelVelocity << "\n";
     if(!isnan(levelVelocity))
     {
       if(levelVelocity > INTGR_MAX)
@@ -156,6 +163,7 @@ void LaserLevelPlugin::UpdateChild(void)
       else
         levelVelocity *= (-1.0);
       _rollJoint->SetVelocity(0, levelVelocity);
+
       //std::cout << __PRETTY_FUNCTION__ << " toControler = " << levelVelocity << "\n";
     }
     else
@@ -203,6 +211,7 @@ void LaserLevelPlugin::UpdateChild(void)
   }
 
   _jointStatePub.publish(_js);
+//  stream.close();
 }
 
 void LaserLevelPlugin::spin()
