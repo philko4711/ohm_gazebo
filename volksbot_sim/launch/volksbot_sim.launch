@@ -2,6 +2,8 @@
 <launch>
 
 	<param name="/use_sim_time" value="true" />
+	<!--<arg name = "TFtime" default="50" />--> 
+	<arg name="TFtime"  	   value="50" />
 	 
 	<!-- ############################## Gazebo mit ausgewählter Welt starten ##################################### -->               
 	
@@ -23,6 +25,11 @@
     	args="-x -0.1 -y 0.0 -z 0.5 -pause -urdf -file '$(find volksbot_new)/urdf/vic_box.urdf' -model vicbox"
     	respawn="false" output="screen" />-->
 	
+	<!--<node pkg="tf"  type="static_transform_publisher" name="tf_laser" args="0.3 0 0.02 0 0 0 base_link laser $(arg TFtime)"/>
+    <node pkg="tf"  type="static_transform_publisher" name="tf_base" args="0 0 0.29 0 0 0 base_footprint base_link $(arg TFtime)"/>-->
+	
+	
+	
 	<arg name="gui" default="false" />
 		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
 			<param name="rate" type="double" value="1000.0" />
@@ -35,11 +42,11 @@
 	</node>	
           	
 	<node name = "joy_node" pkg = "joy" type = "joy_node" output = "screen">
-		<param name = "dev" type = "string" value = "/dev/input/js0"/>
+		<param name = "dev" type = "string" value = "/dev/input/js1"/>
 	</node>	
 	
 	<node name = "joy_to_vel" pkg = "ohm_joyToVel" type = "ohm_joyToVel" output = "screen">
-		<param name = "joystickUsed" type = "bool" value = "true"/>
+		<param name = "joystickUsed" type = "bool" value = "false"/>
 	</node>
 	
 	<node pkg = "twist_switch" name = "twist_switch" type = "twist_switch" output = "screen">

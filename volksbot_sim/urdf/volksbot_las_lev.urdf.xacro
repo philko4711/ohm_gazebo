@@ -645,9 +645,11 @@
   <joint name="base_scan_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.05"/>
     <parent link="laser_base_link"/>
-    <child link="base_scan_link"/>
+    <!--<child link="base_scan_link"/>-->
+    <child link="laser"/>
   </joint>
-  <link name="base_scan_link" type="laser">
+  <!--<link name="base_scan_link" type="laser">-->
+  <link name="laser" type="laser">
     <inertial>
       <mass value="0.1"/>
       <origin xyz="0 0 -0.33"/>
@@ -666,12 +668,14 @@
       </geometry>
     </collision>
   </link> 
-  <gazebo reference="base_scan_link">
+  <!--<gazebo reference="base_scan_link">-->
+  <gazebo reference="laser">
     <material>Gazebo/Black</material>
   </gazebo>
 
 <!--Laserscanner Einstellungen--> 
-  <gazebo reference="base_scan_link">
+  <!--<gazebo reference="base_scan_link">-->
+  <gazebo reference="laser">
     <sensor:ray name="laser">
       <rayCount>683</rayCount>
       <rangeCount>683</rangeCount>
